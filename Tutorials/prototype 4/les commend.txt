@@ -1,0 +1,65 @@
+Tutoriel 13 : Authentification avec Laravel UI
+Objectif pédagogique
+Apprendre à implémenter un système d’authentification complet dans une application Laravel à l’aide de Laravel UI, y compris les fonctionnalités de connexion, enregistrement, réinitialisation du mot de passe, et gestion des utilisateurs connectés.
+
+Concepts abordés
+Installation et configuration de Laravel UI.
+Génération des vues d’authentification.
+Fonctionnement des middleware pour protéger les routes.
+Gestion des utilisateurs connectés.
+Explication théorique
+Laravel UI fournit une interface de base pour intégrer rapidement l’authentification dans une application Laravel. Il offre des vues préconçues pour l’enregistrement, la connexion, et la réinitialisation de mot de passe, tout en utilisant les fonctionnalités de session et middleware pour protéger les routes sensibles.
+
+Étapes
+Étape 1 : Installer Laravel UI
+Installer Laravel UI via Composer :
+1
+composer require laravel/ui
+Générer les fichiers d’authentification avec Bootstrap :
+1
+2
+php artisan ui bootstrap --auth
+npm install && npm run dev
+Étape 2 : Vérifier les routes et les vues générées
+Après exécution, Laravel UI crée automatiquement les routes d’authentification dans le fichier routes/web.php :
+1
+Auth::routes();
+Ces routes incluent :
+
+/login : Page de connexion.
+/register : Page d’enregistrement.
+/password/reset : Page de réinitialisation du mot de passe.
+/home : Tableau de bord des utilisateurs connectés.
+Accéder aux vues générées dans le dossier resources/views/auth.
+Étape 3 : Tester l’authentification
+Démarrer le serveur local :
+1
+php artisan serve
+Accéder à l’application et tester les fonctionnalités suivantes :
+Enregistrement : Créer un nouveau compte.
+Connexion : Se connecter avec les identifiants créés.
+Réinitialisation du mot de passe : Demander un lien de réinitialisation.
+Étape 4 : Protéger les routes
+Utiliser le middleware auth pour protéger les routes sensibles :
+Exemple dans routes/web.php :
+1
+2
+3
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware('auth');
+Rediriger les utilisateurs non authentifiés vers la page de connexion.
+Étape 5 : Gérer les utilisateurs connectés
+Vérifier l’état de l’utilisateur connecté :
+Dans un contrôleur ou une vue :
+1
+2
+$user = Auth::user(); // Récupérer l'utilisateur connecté
+echo $user->name;
+Vérifier si un utilisateur est connecté :
+1
+2
+3
+if (Auth::check()) {
+    echo "Utilisateur connecté";
+}
